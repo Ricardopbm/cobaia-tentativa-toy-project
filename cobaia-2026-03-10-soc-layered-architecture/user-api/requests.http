@@ -1,0 +1,119 @@
+# USER API ================================================================
+
+@host=localhost:8080
+
+### TODOS OS USUÁRIOS
+GET /api/v1/users HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+
+
+### Get all users
+# @name= getAllUsers
+
+GET /api/v1/users HTTP/1.1
+Host: {{host}}
+Accept: application/json
+
+### Create a new valid User
+# @name = createNewUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata",
+    "password": "1234RT56",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+
+### Try and create an invalid User
+# @name = tryCreateInvalidUser
+
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "batata@potato.com",
+    "password": "1234",
+    "handle": "papas",
+    "name": "Kartofel",
+    "roles": [
+        "ROLE_USER"
+    ],
+    "company": "potato inc"
+}
+
+
+### criar um novo usuário
+# @name = createNewUser
+POST /api/v1/users HTTP/1.1
+Host: {{host}}
+Content-Type: application/json
+
+{
+    "email": "ric@email.com",
+    "password": "123456",
+    "handle": "ric"
+}
+
+### Criar Ticket
+POST http://localhost:8080/api/v1/tickets
+Content-Type: application/json
+
+{
+  "acao": "Formatar",
+  "objeto": "Computador",
+  "detalhes": "Lento",
+  "criadorId": 1,
+  "destinatarioId": 1
+}
+
+### Criar Ticket com Observadores
+POST http://localhost:8080/api/v1/tickets
+Content-Type: application/json
+
+{
+  "acao": "Instalar sistema",
+  "objeto": "Notebook",
+  "detalhes": "Precisa instalar Windows",
+  "criadorId": 1,
+  "destinatarioId": 1,
+  "observadoresIds": [1]
+}
+
+### Mudar para EM_ANDAMENTO
+PATCH http://localhost:8080/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "novoStatus": "EM_ANDAMENTO",
+  "responsavelId": 1
+}
+
+### Mudar para RESOLVIDO
+PATCH http://localhost:8080/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "novoStatus": "RESOLVIDO"
+}
+
+### Tentar voltar status (ERRO ESPERADO)
+PATCH http://localhost:8080/api/v1/tickets/1/status
+Content-Type: application/json
+
+{
+  "novoStatus": "PENDENTE"
+}
+
+### Listar Tickets
+GET http://localhost:8080/api/v1/tickets
